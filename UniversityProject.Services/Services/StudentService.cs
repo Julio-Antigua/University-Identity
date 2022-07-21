@@ -110,6 +110,7 @@ namespace UniversityProject.Services.Services
 
         public async Task<IEnumerable<DetailsStudentDto>> GetAllBySubject(DetailsSubject details)
         {
+
             IQueryable<DetailsStudentDto> getStudent = from student in _context.Students
                                                         join detail in _context.DetailsSubjects
                                                         on student.Id equals detail.IdStudent
@@ -123,34 +124,14 @@ namespace UniversityProject.Services.Services
                                                             Subject = subject.Name,
                                                             IdSubject = subject.Id
                                                         };
+
+            if (!getStudent.Any(x => x.IdSubject == details.IdSubject))
+            {
+                throw new BusinessException("this subject does not exist");
+            }
+
             return getStudent;
         }
 
-
-        public void GetStudentWithSubject()
-        {
-            var getStudent = from student in _context.Students
-                             join detail in _context.DetailsSubjects
-                             on student.Id equals detail.IdStudent
-                             select new Student
-                             {
-                                 Id = student.Id,
-                                 FirstName = student.FirstName,
-                                 LastName = student.LastName,
-                                 DateOfBirth = student.DateOfBirth
-                             };
-
-
-            var getStudent2 = _context.Students.Join(_context.DetailsSubjects,
-                x => x.Id,
-                y => y.IdSubject,
-                (x, y) => new Student
-                {
-                    FirstName = x.FirstName,
-                    LastName = x.LastName,
-                    Id = y.IdStudent
-                });
-                
-                }
     }
 }

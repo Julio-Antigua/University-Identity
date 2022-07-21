@@ -22,7 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UniversityProject.Domain\UniversityProject.Domain.csproj" />
     <ProjectReference Include="..\UniversityProject.Infrastructure\UniversityProject.Infrastructure.csproj" />
     <ProjectReference Include="..\UniversityProject.Services\UniversityProject.Services.csproj" />
   </ItemGroup>

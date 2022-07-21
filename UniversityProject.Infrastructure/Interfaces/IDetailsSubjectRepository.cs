@@ -8,6 +8,6 @@ namespace UniversityProject.Infrastructure.Interfaces
     {
         IEnumerable<DetailsSubject> GetStudentBySubject(int id);
         IEnumerable<DetailsSubject> GetSubjectByStudent(int id);
-        Task<bool> DeleteByIdStudent(int id);
+        Task DeleteByIdStudent(int idStudent,int idSubject);
     }
 }

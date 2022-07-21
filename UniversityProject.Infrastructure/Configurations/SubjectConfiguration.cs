@@ -14,7 +14,7 @@ namespace UniversityProject.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Subject> entity)
         {
             entity.HasKey(e => e.Id)
-                    .HasName("PK__Subject__BD949FF556FE994B");
+                    .HasName("PK__Subject__BD949FF5683DD580");
 
             entity.ToTable("Subject");
 
@@ -36,7 +36,7 @@ namespace UniversityProject.Infrastructure.Configurations
             entity.HasOne(d => d.IdCourseNavigation)
                 .WithMany(p => p.Subjects)
                 .HasForeignKey(d => d.IdCourse)
-                .HasConstraintName("FK__Subject__IdCours__571DF1D5");
+                .HasConstraintName("FK__Subject__IdCours__628FA481");
         }
     }
 }

@@ -12,41 +12,61 @@ namespace UniversityProject.Api.Controllers
     [ApiController]
     public class DetailsSubjectController : ControllerBase
     {
-        private readonly IDetailsSubjectService _service;
+        private readonly IDetailsSubjectService _serviceDetail;
 
         public DetailsSubjectController(IDetailsSubjectService service)
         {
-            _service = service;
+            _serviceDetail = service;
         }
 
+        /// <summary>
+        /// Retrive all DetailsSubject
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-           IEnumerable<DetailsSubjectDto> details = _service.GetAll();
+           IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetAll();
            ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
            return Ok(response);
         }
 
+        /// <summary>
+        /// Retrive all details subject by student ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("student/{id:int}")]
         public async Task<IActionResult> GetByIdStudent(int id)
         {
-            IEnumerable<DetailsSubjectDto> details = _service.GetByIdStudent(id);
+            IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetByIdStudent(id);
             ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
             return Ok(response);
         }
 
-        [HttpGet("subject/{id:int}")]
+        /// <summary>
+        /// Retrive all details student by subject ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("subject/{idStudent:int}")]
         public async Task<IActionResult> GetByIdSubject(int id)
         {
-            IEnumerable<DetailsSubjectDto> details = _service.GetByIdSubject(id);
+            IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetByIdSubject(id);
             ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
             return Ok(response);
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteByIdStudent(int id)
+        /// <summary>
+        /// Delete the student by student ID and subject ID
+        /// </summary>
+        /// <param name="idStudent"></param>
+        /// <param name="idSubject"></param>
+        /// <returns></returns>
+        [HttpDelete("student/{idStudent:int}/{idSubject:int}")]
+        public async Task<IActionResult> DeleteByIdStudent(int idStudent, int idSubject)
         {
-            bool details = await _service.DeleteByIdStudent(id);
+            bool details = await _serviceDetail.DeleteByIdStudent(idStudent,idSubject);
             ApiResponse<bool> response = new ApiResponse<bool>(details);
             return Ok(response);
         }

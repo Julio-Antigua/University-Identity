@@ -20,8 +20,8 @@ namespace UniversityProject.Services.Validators
                 .NotEmpty().When(l => l.LastName == null).WithMessage("The lastname field cannot be empty.")
                 .MaximumLength(25).WithMessage("The lastname field has exceeded the maximum number(25) of characters");
 
-            //RuleFor(student => student.DateOfBirth)
-            //    .Must(d => Convert.ToDateTime(d) >= DateTime.Now).WithMessage("The date cannot exceed the current date");
+            RuleFor(student => student.DateOfBirth)
+                .Must(d => Convert.ToDateTime(d) <= DateTime.Now).WithMessage("The date cannot exceed the current date");
 
             RuleFor(student => student.Email)
                 .NotEmpty().When(e => e.Email == null).WithMessage("The email field cannot be empty")

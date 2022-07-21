@@ -67,7 +67,7 @@ namespace UniversityProject.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Retrive one student
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -80,7 +80,7 @@ namespace UniversityProject.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Retrive all student 
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -95,7 +95,7 @@ namespace UniversityProject.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Add the students
         /// </summary>
         /// <param name="studentDto"></param>
         /// <returns></returns>
@@ -108,7 +108,7 @@ namespace UniversityProject.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Update the student by id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="studentDto"></param>
@@ -122,7 +122,7 @@ namespace UniversityProject.Api.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Delete the student by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

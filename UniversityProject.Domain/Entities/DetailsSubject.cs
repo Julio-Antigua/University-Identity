@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace UniversityProject.Domain.Entities
 {
-    public partial class DetailsSubject //: BaseEntity
+    public partial class DetailsSubject
     {
         public int IdSubject { get; set; }
         public int IdStudent { get; set; }

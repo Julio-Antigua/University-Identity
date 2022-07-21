@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UniversityProject.Domain.Entities;
 using UniversityProject.Domain.Exceptions;
+using UniversityProject.Infrastructure.Context;
 using UniversityProject.Infrastructure.Interfaces;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
@@ -16,11 +17,13 @@ namespace UniversityProject.Services.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly UniversityContext _context;
 
-        public SubjectService(IUnitOfWork unitOfWork, IMapper mapper)
+        public SubjectService(IUnitOfWork unitOfWork, IMapper mapper, UniversityContext context)
         {
-            this._unitOfWork = unitOfWork;
-            this._mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _context = context;
         }
         public IEnumerable<SubjectDto> GetAll()
         {
@@ -38,6 +41,8 @@ namespace UniversityProject.Services.Services
            SubjectDto subjectDto = _mapper.Map<SubjectDto>(subject);   
            return subjectDto;  
         }
+
+   
         public async Task Add(SubjectDto subjectDto)
         {
             Subject subject = _mapper.Map<Subject>(subjectDto);
@@ -66,6 +71,30 @@ namespace UniversityProject.Services.Services
             await _unitOfWork.SubjectRepository.DeleteById(id);
             await _unitOfWork.SaveChangesAsync();
             return true;
-        }        
+        }
+
+        public async Task<IEnumerable<DetailsStudentDto>> GetAllBySubject(DetailsSubject details)
+        {
+            IQueryable<DetailsStudentDto> getSubject = from subject in _context.Subjects
+                                                       join detail in _context.DetailsSubjects
+                                                       on subject.Id equals detail.IdSubject
+                                                       join student in _context.Students
+                                                       on detail.IdStudent equals student.Id
+                                                       where student.Id == details.IdStudent
+                                                       select new DetailsStudentDto
+                                                       {
+                                                           IdStudent = student.Id,
+                                                           FirstName = student.FirstName,
+                                                           LastName = student.LastName,
+                                                           Email = student.Email,
+                                                           Subject = subject.Name,
+                                                           IdSubject = subject.Id
+                                                       };
+            if (!getSubject.Any(x => x.IdStudent == details.IdStudent))
+            {
+                throw new BusinessException("this subject does not exist");
+            }
+            return getSubject;
+        }
     }
 }

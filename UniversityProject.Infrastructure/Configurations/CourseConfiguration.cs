@@ -14,7 +14,7 @@ namespace UniversityProject.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Course> entity)
         {
             entity.HasKey(e => e.Id)
-                    .HasName("PK__Course__E0B50B815E18DEEF");
+                    .HasName("PK__Course__E0B50B81B3BDA0F6");
 
             entity.ToTable("Course");
 

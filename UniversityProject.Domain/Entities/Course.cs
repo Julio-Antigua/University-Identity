@@ -11,7 +11,6 @@ namespace UniversityProject.Domain.Entities
         {
             Subjects = new HashSet<Subject>();
         }
-
         public string Name { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime UpdateDate { get; set; }

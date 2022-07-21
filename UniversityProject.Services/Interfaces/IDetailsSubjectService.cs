@@ -12,6 +12,6 @@ namespace UniversityProject.Services.Interfaces
         IEnumerable<DetailsSubjectDto> GetAll();
         IEnumerable<DetailsSubjectDto> GetByIdStudent(int id);
         IEnumerable<DetailsSubjectDto> GetByIdSubject(int id);
-        Task<bool> DeleteByIdStudent(int id);
+        Task<bool> DeleteByIdStudent(int idStudent, int idSubject);
     }
 }

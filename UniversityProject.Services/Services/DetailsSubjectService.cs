@@ -40,9 +40,9 @@ namespace UniversityProject.Services.Services
             return detailsDto;
         }
 
-        public async Task<bool> DeleteByIdStudent(int id)
+        public async Task<bool> DeleteByIdStudent(int idStudent, int idSubject)
         {
-            await _unitOfWork.DetailsSubjectRepository.DeleteByIdStudent(id);
+            await _unitOfWork.DetailsSubjectRepository.DeleteByIdStudent(idStudent,idSubject);    
             await _unitOfWork.SaveChangesAsync();
             return true;
         }

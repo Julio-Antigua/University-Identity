@@ -16,24 +16,35 @@ namespace UniversityProject.Infrastructure.Repositories
 
         }
 
-
         public IEnumerable<DetailsSubject> GetStudentBySubject(int id)
         {
             IEnumerable<DetailsSubject> details = _entities.Where(x => x.IdSubject == id).ToList();
+            if (!details.Any(x => x.IdSubject == id))
+            {
+                throw new BusinessException("this subject does not exist");
+            }
             return details; 
         }
 
         public IEnumerable<DetailsSubject> GetSubjectByStudent(int id)
         {
             IEnumerable<DetailsSubject> details = _entities.Where(x => x.IdStudent == id).ToList();
+            if (!details.Any(x => x.IdStudent == id))
+            {
+                throw new BusinessException("this student does not exist");
+            }
             return details;
         }
 
-        public async Task<bool> DeleteByIdStudent(int id)
+        public async Task DeleteByIdStudent(int idStudent, int idSubject)
         {
-            DetailsSubject student = await _entities.Where(x => x.IdStudent == id).FirstOrDefaultAsync();
+            DetailsSubject student = await _entities.Where(x => x.IdStudent == idStudent && x.IdSubject == idSubject).FirstOrDefaultAsync();
+            if (student == null)
+            {
+                throw new BusinessException("this student does not exist");
+            }
             _entities.Remove(student);
-            return true;
         }
+
     }
 }

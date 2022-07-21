@@ -14,13 +14,13 @@ namespace UniversityProject.Infrastructure.Configurations
         public void Configure(EntityTypeBuilder<Student> entity)
         {
             entity.HasKey(e => e.Id)
-                   .HasName("PK__Student__61B3510468F348EE");
+                   .HasName("PK__Student__61B35104BDE33261");
 
             entity.ToTable("Student");
 
             entity.Property(e => e.Id).HasColumnName("IdStudent");
 
-            entity.HasIndex(e => e.Email, "UQ__Student__A9D10534CB9726A8")
+            entity.HasIndex(e => e.Email, "UQ__Student__A9D105342136A528")
                 .IsUnique();
 
             entity.Property(e => e.CreationDate).HasColumnType("datetime");
