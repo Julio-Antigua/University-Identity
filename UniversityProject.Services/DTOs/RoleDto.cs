@@ -1,8 +1,7 @@
 ﻿namespace UniversityProject.Services.DTOs
 {
-    public class CourseDto
+    public class RoleDto
     {
-        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

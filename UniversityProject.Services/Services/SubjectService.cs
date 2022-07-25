@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using UniversityProject.Domain.CustomEntities;
 using UniversityProject.Domain.Entities;
 using UniversityProject.Domain.Exceptions;
 using UniversityProject.Infrastructure.Context;
@@ -73,28 +71,11 @@ namespace UniversityProject.Services.Services
             return true;
         }
 
-        public async Task<IEnumerable<DetailsStudentDto>> GetAllBySubject(DetailsSubject details)
+        public IEnumerable<DetailsStudentDto> GetAllByStudent(DetailsSubject details)
         {
-            IQueryable<DetailsStudentDto> getSubject = from subject in _context.Subjects
-                                                       join detail in _context.DetailsSubjects
-                                                       on subject.Id equals detail.IdSubject
-                                                       join student in _context.Students
-                                                       on detail.IdStudent equals student.Id
-                                                       where student.Id == details.IdStudent
-                                                       select new DetailsStudentDto
-                                                       {
-                                                           IdStudent = student.Id,
-                                                           FirstName = student.FirstName,
-                                                           LastName = student.LastName,
-                                                           Email = student.Email,
-                                                           Subject = subject.Name,
-                                                           IdSubject = subject.Id
-                                                       };
-            if (!getSubject.Any(x => x.IdStudent == details.IdStudent))
-            {
-                throw new BusinessException("this subject does not exist");
-            }
-            return getSubject;
+            IEnumerable<DetailsStudent> student = _unitOfWork.StudentRepository.GetAllByStudent(details);
+            IEnumerable<DetailsStudentDto> studentDto = _mapper.Map<IEnumerable<DetailsStudentDto>>(student);
+            return studentDto;
         }
     }
 }

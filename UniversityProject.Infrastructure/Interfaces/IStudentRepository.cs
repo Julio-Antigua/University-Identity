@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UniversityProject.Domain.CustomEntities;
 using UniversityProject.Domain.Entities;
 
 namespace UniversityProject.Infrastructure.Interfaces
 {
-    public interface IStudentRepository : IRepository<Student>
+    public interface IStudentRepository : IBaseRepository<Student>
     {
-        //Task<IEnumerable<Student>> GetAllBySubject(DetailsSubject details);
-
+        IEnumerable<DetailsStudent> GetAllBySubject(DetailsSubject details);
+        IEnumerable<DetailsStudent> GetAllByStudent(DetailsSubject details);
     }
 }

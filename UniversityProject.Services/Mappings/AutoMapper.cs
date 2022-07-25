@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UniversityProject.Domain.CustomEntities;
 using UniversityProject.Domain.Entities;
 using UniversityProject.Services.DTOs;
 
@@ -33,6 +31,7 @@ namespace UniversityProject.Services.Mappings
                 .ForMember(s => s.UpdateDate, c => c.MapFrom(x => Convert.ToDateTime(DateTime.Now)));
 
             CreateMap<DetailsSubject,DetailsSubjectDto>().ReverseMap();
+            CreateMap<DetailsStudent,DetailsStudentDto>().ReverseMap();
 
         }
 

@@ -7,9 +7,9 @@ using UniversityProject.Infrastructure.Interfaces;
 
 namespace UniversityProject.Infrastructure.Repositories
 {
-    public class BaseRepository<T> : IRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
-        private readonly UniversityContext _context;
+        protected readonly UniversityContext _context;
         protected DbSet<T> _entities;
 
         public BaseRepository(UniversityContext context)
@@ -24,28 +24,23 @@ namespace UniversityProject.Infrastructure.Repositories
         }
         public async Task<T> GetById(int id)
         {
-            //return await _entities.FirstOrDefaultAsync( x => x.Id == id);
             return await _entities.FindAsync(id);
         }
 
         public async Task Add(T entity)
         {
-            await _entities.AddAsync(entity);
-           
-               
+            await _entities.AddAsync(entity);                 
         }
+
         public void UpdateById(T entity)
         {
-            _entities.Update(entity);
-            
+            _entities.Update(entity);            
         }
 
         public async Task DeleteById(int id)
         {
-            //T entity = await _entities.FirstOrDefaultAsync( x => x.Id == id);
             T entity = await _entities.FindAsync(id);
-            _entities.Remove(entity);
-            
+            _entities.Remove(entity);        
         }   
     }
 }

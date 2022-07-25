@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
+using System;
 using UniversityProject.Services.Interfaces;
 using UniversityProject.Services.QueryFilters;
 
@@ -10,17 +8,22 @@ namespace UniversityProject.Services.Services
 {
     public class UriService : IUriService
     {
-        private readonly string _baseUri;
 
-        public UriService(string baseUri)
+        private readonly IHttpContextAccessor _context;
+
+        public UriService( IHttpContextAccessor context)
         {
-            _baseUri = baseUri;
+            _context = context;
         }
 
-        public Uri GetStudentPaginationUri(StudentQueryFilter filter, string actionUrl)
+        public Uri GetStudentPaginationUri(StudentQueryFilter filter, int numPag,string route)
         {
-            string baseUrl = $"{_baseUri}{actionUrl}";
-            return new Uri(baseUrl);
+            HttpRequest request = _context.HttpContext.Request;
+            string baseUrl = String.Concat(request.Scheme, "://",request.Host.ToUriComponent());
+            Uri endPoint = new Uri(string.Concat(baseUrl,route));
+            string modifiedUri = QueryHelpers.AddQueryString(endPoint.ToString(), "PageNumber", numPag.ToString());
+            modifiedUri = QueryHelpers.AddQueryString(modifiedUri, "PageSize", filter.PageSize.ToString());
+            return new Uri(modifiedUri);
         }
     }
 }

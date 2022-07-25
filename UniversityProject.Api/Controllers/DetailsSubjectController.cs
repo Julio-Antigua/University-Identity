@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniversityProject.Api.Responses;
+using UniversityProject.Domain.Enumerations;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
 
 namespace UniversityProject.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DetailsSubjectController : ControllerBase
@@ -24,11 +27,18 @@ namespace UniversityProject.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
-           IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetAll();
-           ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
-           return Ok(response);
+            try 
+            {
+                IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetAll();
+                ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
+                return Ok(response);
+            } catch (Exception exception) 
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
 
         /// <summary>
@@ -37,11 +47,19 @@ namespace UniversityProject.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("student/{id:int}")]
-        public async Task<IActionResult> GetByIdStudent(int id)
+        public IActionResult GetByIdStudent(int id)
         {
-            IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetByIdStudent(id);
-            ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
-            return Ok(response);
+            try
+            {
+                IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetByIdStudent(id);
+                ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
 
         /// <summary>
@@ -50,11 +68,19 @@ namespace UniversityProject.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("subject/{idStudent:int}")]
-        public async Task<IActionResult> GetByIdSubject(int id)
+        public IActionResult GetByIdSubject(int id)
         {
-            IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetByIdSubject(id);
-            ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
-            return Ok(response);
+            try
+            {
+                IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetByIdSubject(id);
+                ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
 
         /// <summary>
@@ -63,12 +89,21 @@ namespace UniversityProject.Api.Controllers
         /// <param name="idStudent"></param>
         /// <param name="idSubject"></param>
         /// <returns></returns>
+        [Authorize(Policy = nameof(Roles.Administrator))]
         [HttpDelete("student/{idStudent:int}/{idSubject:int}")]
         public async Task<IActionResult> DeleteByIdStudent(int idStudent, int idSubject)
         {
-            bool details = await _serviceDetail.DeleteByIdStudent(idStudent,idSubject);
-            ApiResponse<bool> response = new ApiResponse<bool>(details);
-            return Ok(response);
+            try
+            {
+                bool details = await _serviceDetail.DeleteByIdStudent(idStudent, idSubject);
+                ApiResponse<bool> response = new ApiResponse<bool>(details);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
     }
 }

@@ -10,12 +10,10 @@ namespace UniversityProject.Infrastructure.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IStudentRepository StudentRepository { get; }
-        IRepository<Subject> SubjectRepository { get; }
+        IBaseRepository<Subject> SubjectRepository { get; }
         IDetailsSubjectRepository DetailsSubjectRepository { get; }
-        //IRepository<DetailsSubject> DetailsSubjectRepository { get; }
-        IRepository<Course> CourseRepository { get; }
+        IBaseRepository<Course> CourseRepository { get; }
         void SaveChanges();
         Task SaveChangesAsync();
-
     }
 }

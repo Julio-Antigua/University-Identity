@@ -11,10 +11,7 @@ namespace UniversityProject.Infrastructure.Repositories
 {
     public class DetailsSubjectRepository : BaseRepository<DetailsSubject>, IDetailsSubjectRepository
     {
-        public DetailsSubjectRepository(UniversityContext context) : base(context)
-        {
-
-        }
+        public DetailsSubjectRepository(UniversityContext context) : base(context){}
 
         public IEnumerable<DetailsSubject> GetStudentBySubject(int id)
         {

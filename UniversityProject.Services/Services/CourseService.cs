@@ -1,10 +1,6 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using UniversityProject.Domain.CustomEntities;
 using UniversityProject.Domain.Entities;
 using UniversityProject.Domain.Exceptions;
 using UniversityProject.Infrastructure.Interfaces;

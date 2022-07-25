@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using UniversityProject.Domain.CustomEntities;
 using UniversityProject.Domain.Entities;
 using UniversityProject.Domain.Exceptions;
-using UniversityProject.Infrastructure.Context;
+using UniversityProject.Domain.Options;
 using UniversityProject.Infrastructure.Interfaces;
-using UniversityProject.Infrastructure.Options;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
 using UniversityProject.Services.QueryFilters;
@@ -19,19 +18,19 @@ namespace UniversityProject.Services.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
-        private readonly UniversityContext _context;
+        private readonly IUriService _uriService;
         private readonly PaginationOptions _paginationOptions;
 
 
-        public StudentService(IUnitOfWork unitOfWork, IOptions<PaginationOptions> options,IMapper mapper,UniversityContext context)
+        public StudentService(IUnitOfWork unitOfWork, IOptions<PaginationOptions> options,IMapper mapper, IUriService uriService)
         {
-            this._unitOfWork = unitOfWork;
-            this._mapper = mapper;
-            this._context = context;
-            this._paginationOptions = options.Value;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
+            _uriService = uriService;
+            _paginationOptions = options.Value;
 
         }
-        public PagedList<Student> GetAll(StudentQueryFilter filter)
+        public (PagedList<Student>,Metadata) GetAll(StudentQueryFilter filter)
         {
             filter.PageNumber = filter.PageNumber == 0 ? _paginationOptions.DefaulPageNumber : filter.PageNumber;
             filter.PageSize = filter.PageSize == 0 ? _paginationOptions.DefaultPageSize : filter.PageSize;
@@ -52,8 +51,20 @@ namespace UniversityProject.Services.Services
             }          
 
             PagedList<Student> pageStudent = PagedList<Student>.Create(students, filter.PageNumber, filter.PageSize);
-
-            return pageStudent;
+            int nextPage = filter.PageNumber >= 1 && filter.PageNumber < pageStudent.TotalPages ? filter.PageNumber + 1 : 1;
+            int prevPage = filter.PageNumber - 1 >= 1 && filter.PageNumber <= pageStudent.TotalPages ? filter.PageNumber - 1 : 1;
+            Metadata metadata = new Metadata
+            {
+                TotalCount = pageStudent.TotalCount,
+                PageSize = pageStudent.PageSize,
+                CurrentPage = pageStudent.CurrentPage,
+                TotalPage = pageStudent.TotalPages,
+                HasNextPage = pageStudent.HasNextPage,
+                HasPreviousPage = pageStudent.HasPreviousPage,
+                NextPageUrl = _uriService.GetStudentPaginationUri(filter, nextPage, "/api/Student").ToString(),
+                PreviousPageUrl = _uriService.GetStudentPaginationUri(filter, prevPage, "/api/Student").ToString()
+            };
+            return (pageStudent,metadata);
         }
 
         public async Task<StudentDto> GetById(int id)
@@ -73,8 +84,7 @@ namespace UniversityProject.Services.Services
             {
                 throw new BusinessException("you can`t create a student without subjects");
             }
-            //IEnumerable<int> subjectIds = _unitOfWork.StudentRepository.GetAll().Where(x => studentsDto.SubjectIds.Contains(x.Id)).Select(x => x.Id).ToList();
-            IEnumerable<int> subjectIds = _context.Subjects.Where(x => studentsDto.SubjectIds.Contains(x.Id)).Select(x => x.Id).ToList();
+            IEnumerable<int> subjectIds = _unitOfWork.StudentRepository.GetAll().Where(x => studentsDto.SubjectIds.Contains(x.Id)).Select(x => x.Id).ToList();
             if (studentsDto.SubjectIds.Count() != subjectIds.Count())
             {
                 throw new BusinessException("there is not one of the submitted subject");
@@ -108,29 +118,11 @@ namespace UniversityProject.Services.Services
             return true;
         }
 
-        public async Task<IEnumerable<DetailsStudentDto>> GetAllBySubject(DetailsSubject details)
+        public IEnumerable<DetailsStudentDto> GetAllBySubject(DetailsSubject details)
         {
-
-            IQueryable<DetailsStudentDto> getStudent = from student in _context.Students
-                                                        join detail in _context.DetailsSubjects
-                                                        on student.Id equals detail.IdStudent
-                                                        join subject in _context.Subjects on detail.IdSubject equals subject.Id where subject.Id == details.IdSubject
-                                                        select new DetailsStudentDto
-                                                        {
-                                                            IdStudent = student.Id,
-                                                            FirstName = student.FirstName,
-                                                            LastName = student.LastName,
-                                                            Email = student.Email,
-                                                            Subject = subject.Name,
-                                                            IdSubject = subject.Id
-                                                        };
-
-            if (!getStudent.Any(x => x.IdSubject == details.IdSubject))
-            {
-                throw new BusinessException("this subject does not exist");
-            }
-
-            return getStudent;
+            IEnumerable<DetailsStudent>  student = _unitOfWork.StudentRepository.GetAllBySubject(details);
+            IEnumerable<DetailsStudentDto> studentDto = _mapper.Map<IEnumerable<DetailsStudentDto>>(student);
+            return studentDto;
         }
 
     }

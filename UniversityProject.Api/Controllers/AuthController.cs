@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using UniversityProject.Api.Responses;
+using UniversityProject.Domain.Enumerations;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
 
@@ -70,9 +71,10 @@ namespace UniversityProject.Api.Controllers
             
         }
 
+        [Authorize(Policy = nameof(Roles.Administrator))]
         [HttpPost]
-        [Route("updateRoleForUser")]
-        public async Task<IActionResult> UpdateRoe(string userName, string oldRole, string newRole)
+        [Route("updateRoleByUser")]
+        public async Task<IActionResult> UpdateRoleByUser(string userName, string oldRole, string newRole)
         {
             try
             {

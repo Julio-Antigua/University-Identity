@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniversityProject.Domain.Entities;
-using UniversityProject.Domain.Exceptions;
 using UniversityProject.Infrastructure.Interfaces;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;

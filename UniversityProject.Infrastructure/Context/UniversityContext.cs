@@ -1,14 +1,13 @@
-﻿using System;
-using System.Reflection;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System.Reflection;
 using UniversityProject.Domain.Entities;
 
 #nullable disable
 
 namespace UniversityProject.Infrastructure.Context
 {
-    public partial class UniversityContext : DbContext
+    public partial class UniversityContext : IdentityDbContext
     {
         public UniversityContext()
         {
@@ -27,9 +26,15 @@ namespace UniversityProject.Infrastructure.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS"); 
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
 
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source=LPT3FWS793;Initial Catalog=University;Integrated Security=True;");
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

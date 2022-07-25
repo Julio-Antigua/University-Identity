@@ -2,8 +2,18 @@
 
 namespace UniversityProject.Api.Responses
 {
-    public class ApiResponse<T>
+    public class ApiResponse
     {
+        public ApiResponse()
+        {
+            Success = true;
+        }
+
+        public bool Success { get; set; }
+    }
+    public class ApiResponse<T> 
+    {
+        
         public ApiResponse(T data)
         {
             Data = data;

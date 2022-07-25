@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace UniversityProject.Infrastructure.Interfaces
 {
-    public interface IRepository<T> where T : class
+    public interface IBaseRepository<T> where T : class
     {
         IEnumerable<T> GetAll();
         Task<T> GetById(int id);

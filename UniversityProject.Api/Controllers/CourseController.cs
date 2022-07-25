@@ -1,15 +1,18 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UniversityProject.Api.Responses;
-using UniversityProject.Domain.Entities;
+using UniversityProject.Domain.Enumerations;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
 
 namespace UniversityProject.Api.Controllers
 {
+
+    [Authorize(Policy = nameof(Roles.Administrator))]
     [Route("api/[controller]")]
     [ApiController]
     public class CourseController : ControllerBase
@@ -28,11 +31,20 @@ namespace UniversityProject.Api.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public IActionResult GetAll()
         {
-            IEnumerable<CourseDto> courseList = _courseService.GetAll();
-            ApiResponse<IEnumerable<CourseDto>> response = new ApiResponse<IEnumerable<CourseDto>>(courseList);
-            return Ok(response);
+            try 
+            {
+                IEnumerable<CourseDto> courseList = _courseService.GetAll();
+                ApiResponse<IEnumerable<CourseDto>> response = new ApiResponse<IEnumerable<CourseDto>>(courseList);
+                return Ok(response);
+            } 
+            catch (Exception exception) 
+            {
+                return BadRequest(exception.Message);
+            }
+            
         }
 
         /// <summary>
@@ -41,11 +53,20 @@ namespace UniversityProject.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
         {
-            CourseDto courseList = await _courseService.GetById(id);
-            ApiResponse<CourseDto> response = new ApiResponse<CourseDto>(courseList);
-            return Ok(response);
+            try
+            {
+                CourseDto courseList = await _courseService.GetById(id);
+                ApiResponse<CourseDto> response = new ApiResponse<CourseDto>(courseList);
+                return Ok(response);
+            }
+            catch(Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+          
         }
 
         /// <summary>
@@ -56,9 +77,17 @@ namespace UniversityProject.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CourseDto courseDto)
         {
-            await _courseService.Add(courseDto);
-            ApiResponse<CourseDto> response = new ApiResponse<CourseDto>(courseDto);
-            return Ok(response);
+            try
+            {
+                await _courseService.Add(courseDto);
+                ApiResponse<CourseDto> response = new ApiResponse<CourseDto>(courseDto);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+        
         }
 
         /// <summary>
@@ -70,9 +99,17 @@ namespace UniversityProject.Api.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateById(int id, CourseDto courseDto)
         {
-            bool course = await _courseService.UpdateById(id,courseDto);
-            ApiResponse<bool> response = new ApiResponse<bool>(course);
-            return Ok(response);
+            try
+            {
+                bool course = await _courseService.UpdateById(id, courseDto);
+                ApiResponse<bool> response = new ApiResponse<bool>(course);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+           
         }
 
         /// <summary>
@@ -83,9 +120,17 @@ namespace UniversityProject.Api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteById(int id)
         {
-            bool course = await _courseService.DeleteById(id);
-            ApiResponse<bool> response = new ApiResponse<bool>(course);
-            return Ok(response);
+            try
+            {
+                bool course = await _courseService.DeleteById(id);
+                ApiResponse<bool> response = new ApiResponse<bool>(course);
+                return Ok(response);
+            }
+            catch (Exception exception)
+            {
+                return BadRequest(exception.Message);
+            }
+         
         }
 
     }

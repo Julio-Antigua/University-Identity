@@ -1,4 +1,4 @@
-﻿namespace UniversityProject.Infrastructure.Options
+﻿namespace UniversityProject.Domain.Options
 {
     public class PaginationOptions
     {

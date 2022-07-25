@@ -4,7 +4,7 @@ using UniversityProject.Domain.Entities;
 
 namespace UniversityProject.Infrastructure.Interfaces
 {
-    public interface IDetailsSubjectRepository : IRepository<DetailsSubject>
+    public interface IDetailsSubjectRepository : IBaseRepository<DetailsSubject>
     {
         IEnumerable<DetailsSubject> GetStudentBySubject(int id);
         IEnumerable<DetailsSubject> GetSubjectByStudent(int id);
