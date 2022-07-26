@@ -33,7 +33,6 @@ namespace UniversityProject.Infrastructure.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Data Source=LPT3FWS793;Initial Catalog=University;Integrated Security=True;");
             base.OnConfiguring(optionsBuilder);
         }
     }
