@@ -43,7 +43,7 @@ namespace UniversityProject.Api.Controllers
         {
             try
             {
-                var resultPage = _studentService.GetAll(filter);
+                var resultPage = _studentService.GetAllStudent(filter);
                 PagedList<Student> students = resultPage.Item1;
                 IEnumerable<StudentDto> studentDto = _mapper.Map<IEnumerable<StudentDto>>(students);
                 Metadata metadata = resultPage.Item2;

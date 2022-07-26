@@ -31,7 +31,7 @@ namespace UniversityProject.Api.Controllers
         {
             try 
             {
-                IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetAll();
+                IEnumerable<DetailsSubjectDto> details = _serviceDetail.GetAllDetails();
                 ApiResponse<IEnumerable<DetailsSubjectDto>> response = new ApiResponse<IEnumerable<DetailsSubjectDto>>(details);
                 return Ok(response);
             } catch (Exception exception) 

@@ -31,7 +31,7 @@ namespace UniversityProject.Api.Controllers
         {
             try
             {
-                IEnumerable<SubjectDto> subjects = _subjectService.GetAll();
+                IEnumerable<SubjectDto> subjects = _subjectService.GetAllSubject();
                 ApiResponse<IEnumerable<SubjectDto>> response = new ApiResponse<IEnumerable<SubjectDto>>(subjects);
                 return Ok(response);
             }

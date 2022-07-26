@@ -36,7 +36,7 @@ namespace UniversityProject.Api.Controllers
         {
             try 
             {
-                IEnumerable<CourseDto> courseList = _courseService.GetAll();
+                IEnumerable<CourseDto> courseList = _courseService.GetAllCourse();
                 ApiResponse<IEnumerable<CourseDto>> response = new ApiResponse<IEnumerable<CourseDto>>(courseList);
                 return Ok(response);
             } 
