@@ -19,7 +19,7 @@ namespace UniversityProject.Services.Services
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
         }
-        public IEnumerable<CourseDto> GetAll()
+        public IEnumerable<CourseDto> GetAllCourse()
         {
             IEnumerable<Course> courseList = _unitOfWork.CourseRepository.GetAll();
             IEnumerable<CourseDto> courseDtoList = _mapper.Map<IEnumerable<CourseDto>>(courseList);

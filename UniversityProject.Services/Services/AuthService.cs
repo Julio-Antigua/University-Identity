@@ -53,6 +53,7 @@ namespace UniversityProject.Services.Services
             {        
                 throw new BusinessException("This userName doesn't exists");
             }
+
             bool roleOld = await _roleManager.RoleExistsAsync(oldRole);
             if (roleOld == false)
             {
@@ -64,6 +65,7 @@ namespace UniversityProject.Services.Services
             {
                 throw new BusinessException("This user not in role");
             }
+
             bool roleNew = await _roleManager.RoleExistsAsync(newRole);
             if (roleNew == false)
             {

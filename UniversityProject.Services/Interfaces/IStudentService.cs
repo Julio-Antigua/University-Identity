@@ -9,7 +9,7 @@ namespace UniversityProject.Services.Interfaces
 {
     public interface IStudentService
     {
-        (PagedList<Student>,Metadata) GetAll(StudentQueryFilter filter);
+        (PagedList<Student>,Metadata) GetAllStudent(StudentQueryFilter filter);
         Task<StudentDto> GetById(int id);
         Task Add(StudentDto studentDto);
         Task<bool> UpdateById(int id,StudentDto studentDto);

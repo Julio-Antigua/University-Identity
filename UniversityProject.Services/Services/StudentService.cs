@@ -30,7 +30,7 @@ namespace UniversityProject.Services.Services
             _paginationOptions = options.Value;
 
         }
-        public (PagedList<Student>,Metadata) GetAll(StudentQueryFilter filter)
+        public (PagedList<Student>,Metadata) GetAllStudent(StudentQueryFilter filter)
         {
             filter.PageNumber = filter.PageNumber == 0 ? _paginationOptions.DefaulPageNumber : filter.PageNumber;
             filter.PageSize = filter.PageSize == 0 ? _paginationOptions.DefaultPageSize : filter.PageSize;

@@ -6,7 +6,7 @@ namespace UniversityProject.Services.Interfaces
 {
     public interface IDetailsSubjectService
     {
-        IEnumerable<DetailsSubjectDto> GetAll();
+        IEnumerable<DetailsSubjectDto> GetAllDetails();
         IEnumerable<DetailsSubjectDto> GetByIdStudent(int id);
         IEnumerable<DetailsSubjectDto> GetByIdSubject(int id);
         Task<bool> DeleteByIdStudent(int idStudent, int idSubject);

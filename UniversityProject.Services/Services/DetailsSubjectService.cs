@@ -18,7 +18,7 @@ namespace UniversityProject.Services.Services
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
         }
-        public IEnumerable<DetailsSubjectDto> GetAll()
+        public IEnumerable<DetailsSubjectDto> GetAllDetails()
         {
             IEnumerable<DetailsSubject> details = _unitOfWork.DetailsSubjectRepository.GetAll();
             IEnumerable<DetailsSubjectDto> detailsList = _mapper.Map<IEnumerable<DetailsSubjectDto>>(details);

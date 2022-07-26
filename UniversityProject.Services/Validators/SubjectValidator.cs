@@ -19,10 +19,10 @@ namespace UniversityProject.Services.Validators
                 .NotEmpty().When(f => f.IdCourse <= 0).WithMessage("The idcourse field can't be empty");
 
             RuleFor(subject => subject.StartTime)
-                .Must(d => Convert.ToDateTime(d) < DateTime.Now).WithMessage("The starttime can't be menol to the current date");
+                .Must(d => Convert.ToDateTime(d) >= DateTime.Now).WithMessage("The starttime can't be menol to the current date");
 
             RuleFor(subject => subject.EndTime)
-                .Must(d => Convert.ToDateTime(d) < DateTime.Now).WithMessage("The endtime can't be menol to the current date");
+                .Must(d => Convert.ToDateTime(d) >= DateTime.Now).WithMessage("The endtime can't be menol to the current date");
 
 
         }

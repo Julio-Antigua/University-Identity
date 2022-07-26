@@ -6,7 +6,7 @@ namespace UniversityProject.Services.Interfaces
 {
     public interface ICourseService
     {
-        IEnumerable<CourseDto> GetAll();
+        IEnumerable<CourseDto> GetAllCourse();
         Task<CourseDto> GetById(int id);
         Task Add(CourseDto courseDto);
         Task<bool> UpdateById(int id,CourseDto courseDto);

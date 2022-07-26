@@ -7,7 +7,7 @@ namespace UniversityProject.Services.Interfaces
 {
     public interface ISubjectService
     {
-        IEnumerable<SubjectDto> GetAll();
+        IEnumerable<SubjectDto> GetAllSubject();
         Task<SubjectDto> GetById(int id);
         Task Add(SubjectDto subjectDto);
         Task<bool> UpdateById(int id,SubjectDto subjectDto);

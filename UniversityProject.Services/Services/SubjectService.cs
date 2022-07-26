@@ -23,7 +23,7 @@ namespace UniversityProject.Services.Services
             _mapper = mapper;
             _context = context;
         }
-        public IEnumerable<SubjectDto> GetAll()
+        public IEnumerable<SubjectDto> GetAllSubject()
         {
             IEnumerable<Subject> subject = _unitOfWork.SubjectRepository.GetAll();
             IEnumerable<SubjectDto> result = _mapper.Map<IEnumerable<SubjectDto>>(subject);
@@ -47,6 +47,7 @@ namespace UniversityProject.Services.Services
             await _unitOfWork.SubjectRepository.Add(subject);
             await _unitOfWork.SaveChangesAsync();
         }
+
         public async Task<bool> UpdateById(int id,SubjectDto subjectDto)
         {
             Subject subject = _mapper.Map<Subject>(subjectDto);

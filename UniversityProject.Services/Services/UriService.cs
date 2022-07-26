@@ -8,7 +8,6 @@ namespace UniversityProject.Services.Services
 {
     public class UriService : IUriService
     {
-
         private readonly IHttpContextAccessor _context;
 
         public UriService( IHttpContextAccessor context)
