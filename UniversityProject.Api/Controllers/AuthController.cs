@@ -6,6 +6,9 @@ using UniversityProject.Api.Responses;
 using UniversityProject.Domain.Enumerations;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using System.Net;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace UniversityProject.Api.Controllers
 {
@@ -23,16 +26,31 @@ namespace UniversityProject.Api.Controllers
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult> Login(LoginDto login) 
-        {
+         {
+            ApiResponse<SignInResult> response = default;
             try
             {
-                await _authService.Login(login);
-                return Ok(new ApiResponse());
+                SignInResult result = await _authService.Login(login);
+                response = new ApiResponse<SignInResult>
+                    (
+                        Convert.ToInt32(result != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        result
+                    );
+              
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<SignInResult>
+                     (
+                         Convert.ToInt32(HttpStatusCode.NotFound),
+                         exception.Message.ToString(),
+                         true,
+                         null
+                     );
             }
+            return Ok(response);
             
         }
 
@@ -57,15 +75,31 @@ namespace UniversityProject.Api.Controllers
         [Route("register")]
         public async Task<IActionResult> RegisterRole(RoleDto role) 
         {
+            ApiResponse<IdentityResult> response = default;
             try
             {
-                await _authService.RegisterRole(role);
-                return Ok(new ApiResponse());
+                
+                IdentityResult result = await _authService.RegisterRole(role);
+                response = new ApiResponse<IdentityResult>
+                    (
+                        Convert.ToInt32(result != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        result
+                    );
+
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<IdentityResult>
+                    (
+                        Convert.ToInt32(HttpStatusCode.NotFound),
+                        exception.Message.ToString(),
+                        true,
+                        null
+                    );
             }
+            return Ok(response);
             
         }
 
@@ -74,15 +108,29 @@ namespace UniversityProject.Api.Controllers
         [Route("updateRoleByUser")]
         public async Task<IActionResult> UpdateRoleByUser(string userName, string oldRole, string newRole)
         {
+            ApiResponse<IdentityResult> response = default;
             try
             {
-                await _authService.UpdateRole(userName, oldRole,newRole);
-                return Ok(new ApiResponse());
+                IdentityResult result = await _authService.UpdateRole(userName, oldRole,newRole);
+                response = new ApiResponse<IdentityResult>
+                    (
+                        Convert.ToInt32(result != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        null
+                    );
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<IdentityResult>
+                   (
+                       Convert.ToInt32(HttpStatusCode.NotFound),
+                       exception.Message.ToString(),
+                       true,
+                       null
+                   );
             }
+            return Ok(response);
 
         }
 
@@ -90,16 +138,29 @@ namespace UniversityProject.Api.Controllers
         [Route("signin")]
         public async Task<IActionResult> SignIn(RegisterDto register)
         {
+            ApiResponse<SignInResult> response = default;   
             try
             {
-                await _authService.SignIn(register);
-                return Ok(new ApiResponse());
+                SignInResult result = await _authService.SignIn(register);
+                response = new ApiResponse<SignInResult>
+                    (
+                        Convert.ToInt32(result != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        result
+                    );
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<SignInResult>
+                   (
+                       Convert.ToInt32(HttpStatusCode.NotFound),
+                       exception.Message.ToString(),
+                       true,
+                       null
+                   );
             }
-            
+            return Ok(response);
         }
     }
 }

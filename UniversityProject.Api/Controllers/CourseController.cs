@@ -3,8 +3,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 using UniversityProject.Api.Responses;
+using UniversityProject.Domain.Entities;
 using UniversityProject.Domain.Enumerations;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
@@ -34,17 +36,30 @@ namespace UniversityProject.Api.Controllers
         [AllowAnonymous]
         public IActionResult GetAll()
         {
+            ApiResponse<IEnumerable<CourseDto>> response = default;
             try 
             {
                 IEnumerable<CourseDto> courseList = _courseService.GetAllCourse();
-                ApiResponse<IEnumerable<CourseDto>> response = new ApiResponse<IEnumerable<CourseDto>>(courseList);
-                return Ok(response);
+                response = new ApiResponse<IEnumerable<CourseDto>>
+                    (   Convert.ToInt32(courseList != null ? HttpStatusCode.OK : HttpStatusCode.NotFound ),
+                        "",
+                        false,
+                        courseList
+                    );
+                
             } 
             catch (Exception exception) 
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<IEnumerable<CourseDto>>
+                      (
+                          Convert.ToInt32(HttpStatusCode.BadRequest),
+                          exception.Message.ToString(),
+                          true,
+                          null
+                      );
             }
-            
+            return Ok(response);
+
         }
 
         /// <summary>
@@ -56,17 +71,30 @@ namespace UniversityProject.Api.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GetById(int id)
         {
+            ApiResponse<CourseDto> response = default;
             try
             {
                 CourseDto courseList = await _courseService.GetById(id);
-                ApiResponse<CourseDto> response = new ApiResponse<CourseDto>(courseList);
-                return Ok(response);
+                 response = new ApiResponse<CourseDto>
+                    (   
+                        Convert.ToInt32(courseList != null ? HttpStatusCode.OK : HttpStatusCode.NotFound ),
+                        "",
+                        false,
+                        courseList
+                    );          
             }
             catch(Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<CourseDto>
+                     (
+                         Convert.ToInt32(HttpStatusCode.BadRequest),
+                         exception.Message.ToString(),
+                         true,
+                         null
+                     );
             }
-          
+            return Ok(response);
+
         }
 
         /// <summary>
@@ -77,17 +105,29 @@ namespace UniversityProject.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(CourseDto courseDto)
         {
+            ApiResponse<Course> response = default;
             try
             {
-                await _courseService.Add(courseDto);
-                ApiResponse<CourseDto> response = new ApiResponse<CourseDto>(courseDto);
-                return Ok(response);
+                Course course = await _courseService.Add(courseDto);
+                response = new ApiResponse<Course>
+                    (
+                        Convert.ToInt32(course != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        course
+                    );   
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<Course>
+                     (
+                         Convert.ToInt32(HttpStatusCode.BadRequest),
+                         exception.Message.ToString(),
+                         true,
+                         null
+                     );
             }
-        
+            return Ok(response);
         }
 
         /// <summary>
@@ -99,17 +139,30 @@ namespace UniversityProject.Api.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateById(int id, CourseDto courseDto)
         {
+            ApiResponse<bool> response = default;
             try
             {
                 bool course = await _courseService.UpdateById(id, courseDto);
-                ApiResponse<bool> response = new ApiResponse<bool>(course);
-                return Ok(response);
+                response = new ApiResponse<bool>
+                    (
+                        Convert.ToInt32(course != false ? HttpStatusCode.NoContent : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        course
+                    );
+                
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<bool>
+                      (
+                          Convert.ToInt32(HttpStatusCode.BadRequest),
+                          exception.Message.ToString(),
+                          true,
+                          false
+                      );
             }
-           
+            return NoContent();
         }
 
         /// <summary>
@@ -120,17 +173,30 @@ namespace UniversityProject.Api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> DeleteById(int id)
         {
+            ApiResponse<bool> response = default;
             try
             {
                 bool course = await _courseService.DeleteById(id);
-                ApiResponse<bool> response = new ApiResponse<bool>(course);
-                return Ok(response);
+                response = new ApiResponse<bool>
+                    (
+                        Convert.ToInt32(course != false ? HttpStatusCode.NoContent : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        course
+                    );
+                
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<bool>
+                     (
+                         Convert.ToInt32(HttpStatusCode.BadRequest),
+                         exception.Message.ToString(),
+                         true,
+                         false
+                     );
             }
-         
+            return NoContent();
         }
 
     }

@@ -41,25 +41,39 @@ namespace UniversityProject.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ApiResponse<IEnumerable<StudentDto>>))]
         public IActionResult GetAll([FromQuery] StudentQueryFilter filter)
         {
+            ApiResponse<IEnumerable<StudentDto>> response = default;
             try
             {
                 var resultPage = _studentService.GetAllStudent(filter);
                 PagedList<Student> students = resultPage.Item1;
                 IEnumerable<StudentDto> studentDto = _mapper.Map<IEnumerable<StudentDto>>(students);
                 Metadata metadata = resultPage.Item2;
-                ApiResponse<IEnumerable<StudentDto>> response = new ApiResponse<IEnumerable<StudentDto>>(studentDto)
+                response = new ApiResponse<IEnumerable<StudentDto>>
+                    (
+                        Convert.ToInt32(studentDto != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        studentDto
+                    )
                 {
                     Meta = metadata
                 };
                 Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
 
-                return Ok(response);
+                
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<IEnumerable<StudentDto>>
+                     (
+                         Convert.ToInt32(HttpStatusCode.BadRequest),
+                         exception.Message.ToString(),
+                         true,
+                         null
+                     );
             }
-            
+            return Ok(response);
+
         }
 
         /// <summary>
@@ -70,17 +84,31 @@ namespace UniversityProject.Api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
+            ApiResponse<StudentDto> response = default;
             try
             {
                 StudentDto studentDto = await _studentService.GetById(id);
-                ApiResponse<StudentDto> response = new ApiResponse<StudentDto>(studentDto);
-                return Ok(response);
+                response = new ApiResponse<StudentDto>
+                    (
+                        Convert.ToInt32(studentDto != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        studentDto
+                    );
+                
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<StudentDto>
+                     (
+                         Convert.ToInt32(HttpStatusCode.BadRequest),
+                         exception.Message.ToString(),
+                         true,
+                         null
+                     );
             }
-            
+            return Ok(response);
+
         }
 
         /// <summary>
@@ -91,19 +119,33 @@ namespace UniversityProject.Api.Controllers
         [HttpGet("Subject/{id:int}")]
         public IActionResult GetAllBySubject([FromRoute] int id)
         {
+            ApiResponse<IEnumerable<DetailsStudentDto>> response = default;
             try
             {
                 DetailsSubject details = new DetailsSubject();
                 details.IdSubject = id;
-                var student = _studentService.GetAllBySubject(details);
-                ApiResponse<IEnumerable<DetailsStudentDto>> response = new ApiResponse<IEnumerable<DetailsStudentDto>>(student);
-                return Ok(response);
+                IEnumerable<DetailsStudentDto> student = _studentService.GetAllBySubject(details);
+                response = new ApiResponse<IEnumerable<DetailsStudentDto>>
+                    (
+                         Convert.ToInt32(student != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        student
+                    );
+                
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<IEnumerable<DetailsStudentDto>>
+                     (
+                         Convert.ToInt32(HttpStatusCode.BadRequest),
+                         exception.Message.ToString(),
+                         true,
+                         null
+                     );
             }
-            
+            return Ok(response);
+
         }
 
         /// <summary>
@@ -114,17 +156,32 @@ namespace UniversityProject.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] StudentDto studentDto)
         {
+            ApiResponse<Student> response = default;
             try
             {
-                await _studentService.Add(studentDto);
-                ApiResponse<StudentDto> response = new ApiResponse<StudentDto>(studentDto);
-                return Ok(response);
+                Student student = await _studentService.Add(studentDto);
+                response = new ApiResponse<Student>
+                    (
+                        Convert.ToInt32(student != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        student
+                    );
+                
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<Student>
+                    (
+                        Convert.ToInt32(HttpStatusCode.BadRequest),
+                        exception.Message.ToString(),
+                        true,
+                        null
+                    );
+
             }
-            
+            return Ok(response);
+
         }
 
         /// <summary>
@@ -136,17 +193,32 @@ namespace UniversityProject.Api.Controllers
         [HttpPut("{id:int}")]
         public async Task<IActionResult> UpdateById([FromRoute] int id, [FromBody] StudentDto studentDto)
         {
+            ApiResponse<bool> response = default;
             try
             {
                 bool result = await _studentService.UpdateById(id, studentDto);
-                ApiResponse<bool> response = new ApiResponse<bool>(result);
-                return Ok(response);
+                response = new ApiResponse<bool>
+                    (
+
+                        Convert.ToInt32(result != false ? HttpStatusCode.NoContent : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        result
+                    );
+               
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<bool>
+                     (
+                         Convert.ToInt32(HttpStatusCode.BadRequest),
+                         exception.Message.ToString(),
+                         true,
+                         false
+                     );
             }
-            
+            return NoContent();
+
         }
 
         /// <summary>
@@ -157,17 +229,32 @@ namespace UniversityProject.Api.Controllers
         [HttpDelete("{id:int}")]
         public async Task<IActionResult> RemoveById([FromRoute] int id)
         {
+            ApiResponse<bool> response = default;
             try
             {
                 bool result = await _studentService.DeleteById(id);
-                ApiResponse<bool> response = new ApiResponse<bool>(result);
-                return Ok(response);
+                response = new ApiResponse<bool>
+                    (
+
+                        Convert.ToInt32(result != false ? HttpStatusCode.NoContent : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        result
+                    );
+                
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<bool>
+                    (
+                        Convert.ToInt32(HttpStatusCode.BadRequest),
+                        exception.Message.ToString(),
+                        true,
+                        false
+                    );
             }
-            
+            return NoContent();
+
         }
     }
 }
