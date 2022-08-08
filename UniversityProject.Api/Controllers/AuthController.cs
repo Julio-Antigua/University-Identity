@@ -58,16 +58,32 @@ namespace UniversityProject.Api.Controllers
         [Route("logout")]
         public async Task<IActionResult> Logout()
         {
-            try 
+            ApiResponse<bool> response = default;
+            try
             {
-                await _authService.LogOut();
-                return Ok(new ApiResponse());
+
+                bool result = await _authService.LogOut();
+                response = new ApiResponse<bool>
+                    (
+                        Convert.ToInt32(result != false ? HttpStatusCode.OK : HttpStatusCode.NotFound),
+                        "",
+                        false,
+                        result
+                    );
+
             }
             catch (Exception exception)
             {
-                return BadRequest(exception.Message);
+                response = new ApiResponse<bool>
+                    (
+                        Convert.ToInt32(HttpStatusCode.NotFound),
+                        exception.Message.ToString(),
+                        true,
+                        false
+                    );
             }
-            
+            return Ok(response);
+
         }
 
         [ApiExplorerSettings(IgnoreApi = true)]

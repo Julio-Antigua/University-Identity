@@ -1,26 +1,10 @@
-using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using System;
-using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
-using UniversityProject.Domain.Enumerations;
-using UniversityProject.Infrastructure.Context;
-using UniversityProject.Infrastructure.Filters;
-using UniversityProject.Infrastructure.Interfaces;
-using UniversityProject.Domain.Options;
-using UniversityProject.Infrastructure.Repositories;
-using UniversityProject.Infrastructure.UnitOfWork;
-using UniversityProject.Services.Interfaces;
-using UniversityProject.Services.Services;
 using UniversityProject.Services.Extensions;
 
 namespace UniversityProject.Api
@@ -45,6 +29,7 @@ namespace UniversityProject.Api
             services.AddOptionsConfig(Configuration);
             services.AddServicesConfig(Configuration);
             services.AddSwaggerGenConfig($"{Assembly.GetExecutingAssembly().GetName().Name}.xml");    
+      
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,8 +43,11 @@ namespace UniversityProject.Api
             }
 
             app.UseHttpsRedirection();
+            
+
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

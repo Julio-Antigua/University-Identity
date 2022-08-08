@@ -9,13 +9,14 @@ using System.Threading.Tasks;
 using UniversityProject.Api.Responses;
 using UniversityProject.Domain.CustomEntities;
 using UniversityProject.Domain.Entities;
+using UniversityProject.Domain.Enumerations;
 using UniversityProject.Services.DTOs;
 using UniversityProject.Services.Interfaces;
 using UniversityProject.Services.QueryFilters;
 
 namespace UniversityProject.Api.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = nameof( Roles.Administrator))]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
@@ -36,6 +37,7 @@ namespace UniversityProject.Api.Controllers
         /// </summary>
         /// <param name="filter">Filters to apply</param>
         /// <returns></returns>
+        //[AllowAnonymous]
         [HttpGet(Name = nameof(GetAll))]
         [ProducesResponseType((int)HttpStatusCode.OK, Type = typeof(ApiResponse<IEnumerable<StudentDto>>))]
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ApiResponse<IEnumerable<StudentDto>>))]
@@ -81,6 +83,7 @@ namespace UniversityProject.Api.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
@@ -154,6 +157,7 @@ namespace UniversityProject.Api.Controllers
         /// <param name="studentDto"></param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Add([FromBody] StudentDto studentDto)
         {
             ApiResponse<Student> response = default;
@@ -191,6 +195,7 @@ namespace UniversityProject.Api.Controllers
         /// <param name="studentDto"></param>
         /// <returns></returns>
         [HttpPut("{id:int}")]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateById([FromRoute] int id, [FromBody] StudentDto studentDto)
         {
             ApiResponse<bool> response = default;
@@ -227,6 +232,7 @@ namespace UniversityProject.Api.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete("{id:int}")]
+        [AllowAnonymous]
         public async Task<IActionResult> RemoveById([FromRoute] int id)
         {
             ApiResponse<bool> response = default;
