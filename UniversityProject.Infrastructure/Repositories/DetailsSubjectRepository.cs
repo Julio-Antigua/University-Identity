@@ -33,14 +33,16 @@ namespace UniversityProject.Infrastructure.Repositories
             return details;
         }
 
-        public async Task DeleteByIdStudent(int idStudent, int idSubject)
+        public async Task<bool> DeleteByIdStudent(int idStudent, int idSubject)
         {
             DetailsSubject student = await _entities.Where(x => x.IdStudent == idStudent && x.IdSubject == idSubject).FirstOrDefaultAsync();
             if (student == null)
             {
+                return false;
                 throw new BusinessException("this student does not exist");
             }
             _entities.Remove(student);
+            return true;
         }
 
     }
