@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace UniversityProject.Services.Extensions
 
             services.ConfigureApplicationCookie(options =>
             {
+
                 options.Events.OnRedirectToLogin = context =>
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -42,6 +44,13 @@ namespace UniversityProject.Services.Extensions
                 options.Cookie.HttpOnly = false;
             });
 
+            services.AddCookiePolicy(options => {
+                options.MinimumSameSitePolicy = SameSiteMode.Strict;
+            });
+
+            //services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            //.AddCookie();
+
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("Administrator", policy => policy.RequireRole(nameof(Roles.Administrator)));
@@ -49,6 +58,7 @@ namespace UniversityProject.Services.Extensions
                 options.AddPolicy("Student", policy => policy.RequireRole(nameof(Roles.Student)));
                 options.AddPolicy("StudentOrTeacher", policy => policy.RequireRole(nameof(Roles.Student), nameof(Roles.Teacher)));
             });
+
 
             return services;
         }

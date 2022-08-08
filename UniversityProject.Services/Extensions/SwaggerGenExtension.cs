@@ -13,7 +13,7 @@ namespace UniversityProject.Services.Extensions
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UniversityProject.Api", Version = "v1" });
-                var xmlFath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                string xmlFath = string.Format(Path.Combine(AppContext.BaseDirectory, xmlFile));
                 c.IncludeXmlComments(xmlFath);
             });
 

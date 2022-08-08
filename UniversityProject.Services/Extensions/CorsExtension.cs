@@ -11,10 +11,11 @@ namespace UniversityProject.Services.Extensions
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.AllowAnyOrigin();
-                    builder.AllowAnyHeader();
-                    builder.AllowAnyMethod();
-                    builder.AllowCredentials();
+                    builder.WithOrigins(Configuration["Clients:Vue80"], Configuration["Clients:Vue81"])
+                           .AllowAnyHeader()
+                           .AllowAnyMethod()
+                           .AllowCredentials();
+                           
                 });
             });
             return services;

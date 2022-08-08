@@ -41,11 +41,12 @@ namespace UniversityProject.Services.Services
         }
 
    
-        public async Task Add(SubjectDto subjectDto)
+        public async Task<Subject> Add(SubjectDto subjectDto)
         {
             Subject subject = _mapper.Map<Subject>(subjectDto);
             await _unitOfWork.SubjectRepository.Add(subject);
             await _unitOfWork.SaveChangesAsync();
+            return subject;
         }
 
         public async Task<bool> UpdateById(int id,SubjectDto subjectDto)
@@ -53,6 +54,7 @@ namespace UniversityProject.Services.Services
             Subject subject = _mapper.Map<Subject>(subjectDto);
             if (subject.Id != id)
             {
+                return false;
                 throw new BusinessException("This subject doesn`t exist");
             }
             _unitOfWork.SubjectRepository.UpdateById(subject);
@@ -65,6 +67,7 @@ namespace UniversityProject.Services.Services
             Subject subject = await _unitOfWork.SubjectRepository.GetById(id);
             if( subject == null)
             {
+                return false;
                 throw new BusinessException("This subject doesn`t exist");
             }
             await _unitOfWork.SubjectRepository.DeleteById(id);

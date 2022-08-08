@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UniversityProject.Domain.Entities;
 using UniversityProject.Services.DTOs;
 
 namespace UniversityProject.Services.Interfaces
@@ -8,7 +9,7 @@ namespace UniversityProject.Services.Interfaces
     {
         IEnumerable<CourseDto> GetAllCourse();
         Task<CourseDto> GetById(int id);
-        Task Add(CourseDto courseDto);
+        Task<Course> Add(CourseDto courseDto);
         Task<bool> UpdateById(int id,CourseDto courseDto);
         Task<bool> DeleteById(int id);
     }

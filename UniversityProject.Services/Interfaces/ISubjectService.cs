@@ -9,7 +9,7 @@ namespace UniversityProject.Services.Interfaces
     {
         IEnumerable<SubjectDto> GetAllSubject();
         Task<SubjectDto> GetById(int id);
-        Task Add(SubjectDto subjectDto);
+        Task<Subject> Add(SubjectDto subjectDto);
         Task<bool> UpdateById(int id,SubjectDto subjectDto);
         Task<bool> DeleteById(int id);
         IEnumerable<DetailsStudentDto> GetAllByStudent(DetailsSubject details);

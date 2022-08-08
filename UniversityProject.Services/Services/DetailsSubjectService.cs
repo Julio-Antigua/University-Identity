@@ -41,9 +41,9 @@ namespace UniversityProject.Services.Services
 
         public async Task<bool> DeleteByIdStudent(int idStudent, int idSubject)
         {
-            await _unitOfWork.DetailsSubjectRepository.DeleteByIdStudent(idStudent,idSubject);    
+            bool result = await _unitOfWork.DetailsSubjectRepository.DeleteByIdStudent(idStudent,idSubject);    
             await _unitOfWork.SaveChangesAsync();
-            return true;
+            return result;
         }
     }
 }

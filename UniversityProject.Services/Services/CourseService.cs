@@ -35,23 +35,28 @@ namespace UniversityProject.Services.Services
             CourseDto courseDto = _mapper.Map<CourseDto>(course);
             return courseDto;
         }
-        public async Task Add(CourseDto courseDto)
+        public async Task<Course> Add(CourseDto courseDto)
         {
             Course course = _mapper.Map<Course>(courseDto);
             await _unitOfWork.CourseRepository.Add(course);
             await _unitOfWork.SaveChangesAsync();
+            return course;
         }
         public async Task<bool> UpdateById(int id, CourseDto courseDto)
         {
             Course course = _mapper.Map<Course>(courseDto);
             if (course.Id != id)
             {
+                return false;
                 throw new BusinessException("this course doesn`t exist");
             }
-            course.Id = id;
-            _unitOfWork.CourseRepository.UpdateById(course);
-            await _unitOfWork.SaveChangesAsync();
-            return true;
+            else
+            {
+                course.Id = id;
+                _unitOfWork.CourseRepository.UpdateById(course);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
         }
 
         public async Task<bool> DeleteById(int id)
@@ -59,11 +64,15 @@ namespace UniversityProject.Services.Services
             Course course = await _unitOfWork.CourseRepository.GetById(id);
             if(course == null)
             {
+                return false;
                 throw new BusinessException("This course doesn`t exits");
             }
-            await _unitOfWork.CourseRepository.DeleteById(id);
-            await _unitOfWork.SaveChangesAsync();
-            return true;
+            else
+            {
+                await _unitOfWork.CourseRepository.DeleteById(id);
+                await _unitOfWork.SaveChangesAsync();
+                return true;
+            }
         }
     }
 }

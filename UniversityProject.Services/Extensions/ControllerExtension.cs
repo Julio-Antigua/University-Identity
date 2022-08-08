@@ -22,6 +22,8 @@ namespace UniversityProject.Services.Extensions
             }).AddFluentValidation(options => options.RegisterValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
             //.ConfigureApiBehaviorOptions(options => { /*options.SuppressModelStateInvalidFilter = true;*/ });
 
+            services.AddHttpContextAccessor();
+
             return services;
         }
     }

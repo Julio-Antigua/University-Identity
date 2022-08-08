@@ -11,7 +11,7 @@ namespace UniversityProject.Services.Interfaces
     {
         (PagedList<Student>,Metadata) GetAllStudent(StudentQueryFilter filter);
         Task<StudentDto> GetById(int id);
-        Task Add(StudentDto studentDto);
+        Task<Student> Add(StudentDto studentDto);
         Task<bool> UpdateById(int id,StudentDto studentDto);
         Task<bool> DeleteById(int id);
         IEnumerable<DetailsStudentDto> GetAllBySubject(DetailsSubject details);
