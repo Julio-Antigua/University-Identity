@@ -11,7 +11,7 @@ namespace UniversityProject.Services.Extensions
             {
                 options.AddDefaultPolicy(builder =>
                 {
-                    builder.WithOrigins(Configuration["Clients:Vue80"], Configuration["Clients:Vue81"])
+                    builder.WithOrigins(Configuration["Clients:Vue80"], Configuration["Clients:Vue81"], Configuration["Clients:Nuxt"])
                            .AllowAnyHeader()
                            .AllowAnyMethod()
                            .AllowCredentials();

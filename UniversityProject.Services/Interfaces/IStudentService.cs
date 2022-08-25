@@ -7,9 +7,9 @@ using UniversityProject.Services.QueryFilters;
 
 namespace UniversityProject.Services.Interfaces
 {
-    public interface IStudentService
+    public interface IStudentService:IPaginateService<StudentDto>
     {
-        (PagedList<Student>,Metadata) GetAllStudent(StudentQueryFilter filter);
+        (PagedList<StudentDto>,Metadata) GetAllStudent(StudentQueryFilter filter);
         Task<StudentDto> GetById(int id);
         Task<Student> Add(StudentDto studentDto);
         Task<bool> UpdateById(int id,StudentDto studentDto);
