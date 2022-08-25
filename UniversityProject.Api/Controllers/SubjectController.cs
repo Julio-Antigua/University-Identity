@@ -23,10 +23,11 @@ namespace UniversityProject.Api.Controllers
         {
             this._subjectService = repository;
         }
-         /// <summary>
-         /// Retrive all subject
-         /// </summary>
-         /// <returns></returns>
+        /// <summary>
+        /// Retrive all subject
+        /// </summary>
+        /// <returns></returns>
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll()
         {

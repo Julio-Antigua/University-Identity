@@ -20,12 +20,10 @@ namespace UniversityProject.Api.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseService _courseService;
-        private readonly IMapper _mapper;
 
-        public CourseController(ICourseService courseService, IMapper mapper)
+        public CourseController(ICourseService courseService)
         {
             _courseService = courseService;
-            this._mapper = mapper;
         }
 
         /// <summary>

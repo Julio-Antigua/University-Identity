@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using UniversityProject.Api.Responses;
@@ -22,14 +23,22 @@ namespace UniversityProject.Api.Controllers
     public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
-        private readonly IMapper _mapper;
-        private readonly IUriService _uriService;
 
-        public StudentController(IStudentService studentService, IMapper mapper, IUriService uriService)
+        public StudentController(IStudentService studentService)
         {
             this._studentService= studentService;
-            this._mapper = mapper;
-            this._uriService = uriService;
+        }
+
+        //[AllowAnonymous]
+        [HttpGet("Pagination")]
+        public Page<StudentDto> GetPagination(int page = 1, int limit = 5, string? search = null)
+        {
+            var filter = new Dictionary<string, string>()
+            {
+                {"search", search}
+            };
+            Page<StudentDto> paged = _studentService.Paginate(page, limit, filter);
+            return paged;
         }
 
         /// <summary>
@@ -43,14 +52,13 @@ namespace UniversityProject.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest, Type = typeof(ApiResponse<IEnumerable<StudentDto>>))]
         public IActionResult GetAll([FromQuery] StudentQueryFilter filter)
         {
-            ApiResponse<IEnumerable<StudentDto>> response = default;
+            ApiResponse<PagedList<StudentDto>> response = default;
             try
             {
                 var resultPage = _studentService.GetAllStudent(filter);
-                PagedList<Student> students = resultPage.Item1;
-                IEnumerable<StudentDto> studentDto = _mapper.Map<IEnumerable<StudentDto>>(students);
+                PagedList<StudentDto> studentDto = resultPage.Item1;
                 Metadata metadata = resultPage.Item2;
-                response = new ApiResponse<IEnumerable<StudentDto>>
+                response = new ApiResponse<PagedList<StudentDto>>
                     (
                         Convert.ToInt32(studentDto != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
                         "",
@@ -66,7 +74,7 @@ namespace UniversityProject.Api.Controllers
             }
             catch (Exception exception)
             {
-                response = new ApiResponse<IEnumerable<StudentDto>>
+                response = new ApiResponse<PagedList<StudentDto>>
                      (
                          Convert.ToInt32(HttpStatusCode.BadRequest),
                          exception.Message.ToString(),
@@ -87,30 +95,10 @@ namespace UniversityProject.Api.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
-            ApiResponse<StudentDto> response = default;
-            try
-            {
-                StudentDto studentDto = await _studentService.GetById(id);
-                response = new ApiResponse<StudentDto>
-                    (
-                        Convert.ToInt32(studentDto != null ? HttpStatusCode.OK : HttpStatusCode.NotFound),
-                        "",
-                        false,
-                        studentDto
-                    );
-                
-            }
-            catch (Exception exception)
-            {
-                response = new ApiResponse<StudentDto>
-                     (
-                         Convert.ToInt32(HttpStatusCode.BadRequest),
-                         exception.Message.ToString(),
-                         true,
-                         null
-                     );
-            }
-            return Ok(response);
+           
+            StudentDto studentDto = await _studentService.GetById(id);
+
+            return Ok(studentDto);
 
         }
 
