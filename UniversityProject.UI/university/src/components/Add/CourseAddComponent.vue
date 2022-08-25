@@ -69,7 +69,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 h4{
     margin-right: 40px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -122,6 +122,7 @@ h4{
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   text-align: center;
+  margin-bottom: 35%;
 }
 .text-left{
     margin-right: 230px;

@@ -29,57 +29,57 @@
                 <div class="image-port">
                   <img src="https://fastly.4sqi.net/img/general/600x600/41014375_uk13e70GiFvyb-uAA8W1XzUBJVpD1012GMZhdhcRQJc.jpg" alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png"  alt="">
+                    <img src=""  alt="">
                     <p>Nuestro trabajo</p>
                   </div>
                 </div>
                 <div class="image-port">
                   <img src="https://www.intec.edu.do/images/header-resumen-intec/intec-fachada.jpg" alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png"  alt="">
+                    <img src=""  alt="">
                     <p>Nuestro trabajo</p>
                   </div>
                 </div>
                  <div class="image-port">
                   <img src="https://egresados.intec.edu.do/images/img/graduacion-58/Horizontal/JPEG/DSC_1273.jpg"  alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png"  alt="">
+                    <img src=""  alt="">
                     <p>Nuestro trabajo</p>
                   </div>
                 </div>
                  <div class="image-port">
                   <img src="https://graduacion.intec.edu.do/images/img/galeria/JPEG/DSC_2142.jpg" alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png"  alt="">
+                    <img src=""  alt="">
                     <p>Nuestro trabajo</p>
                   </div>
                 </div>
                  <div class="image-port">
                   <img src="https://www.intec.edu.do/images/slideset/home/CEG-Intec-blanco.png" alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png"  alt="">
+                    <img src=""  alt="">
                     <p>Nuestro trabajo</p>
                   </div>
                 </div>
                  <div class="image-port">
                   <img src="https://www.centros.com.do/uploads/0000/20/2022/01/06/30688195-1910058535733433-4657867439529263104-n.png" alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png"  alt="">
+                    <img src=""  alt="">
                     <p>Nuestro trabajo</p>
                   </div>
                 </div>
                  <div class="image-port">
                   <img src="https://www.intec.edu.do/images/assets/Sello-iconos-1.png" alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png" alt="">
+                    <img src="" alt="">
                     <p>Nuestro trabajo</p>
                   </div>
                 </div>
                  <div class="image-port">
                   <img src="https://cdn.businessinsider.es/sites/navi.axelspringer.es/public/styles/bi_1140/public/media/image/2022/02/trabajadores-felices-oficina-2622763.jpg?itok=m1vtlAba" alt="">
                   <div class="hover-gallery">
-                    <img src="https://cdn.icon-icons.com/icons2/664/PNG/512/construction_project_plan_building_architect_design_develop-56_icon-icons.com_60237.png"  alt="">
-                    <p>Nuestro trabajo 8</p>
+                    <img src=""  alt="">
+                    <p>Nuestro trabajo</p>
                   </div>
                 </div>
 

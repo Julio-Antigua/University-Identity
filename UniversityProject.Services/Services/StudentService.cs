@@ -15,6 +15,7 @@ using UniversityProject.Domain.Enumerations;
 using UniversityProject.Domain.Helpers;
 using System;
 using UniversityProject.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace UniversityProject.Services.Services
 {
@@ -23,10 +24,13 @@ namespace UniversityProject.Services.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly IUriService _uriService;
-        private readonly UniversityContext context;
         private readonly PaginationOptions _paginationOptions;
         private readonly UniversityContext _context;
-        
+        private IUnitOfWork unitOfWork;
+        private PaginationOptions paginationOptions;
+        private IMapper mapper;
+        private IUriService uriService;
+        private UniversityContext context;
 
         public object Helper { get; private set; }
 
@@ -39,7 +43,8 @@ namespace UniversityProject.Services.Services
             _paginationOptions = options.Value;
 
         }
-        public (PagedList<Student>,Metadata) GetAllStudent(StudentQueryFilter filter)
+
+        public (PagedList<StudentDto>, Metadata) GetAllStudent(StudentQueryFilter filter)
         {
             filter.PageNumber = filter.PageNumber == 0 ? _paginationOptions.DefaultPageNumber : filter.PageNumber;
             filter.PageSize = filter.PageSize == 0 ? _paginationOptions.DefaultPageSize : filter.PageSize;
@@ -52,8 +57,10 @@ namespace UniversityProject.Services.Services
                 students = filter.IdStudent != null ?  students.Where(x => x.Id == filter.IdStudent) :
                     filter.FirstName != null ? students.Where(x => x.FirstName.ToLower().Contains(filter.FirstName.ToLower())) :
                     filter.EntryDate != null ? students = students.Where(x => x.CreationDate.ToShortDateString() == filter.EntryDate?.ToShortDateString()) : students;
-           
-            PagedList<Student> pageStudent = PagedList<Student>.Create(students, filter.PageNumber, filter.PageSize);
+
+            IEnumerable<StudentDto> studentDto = _mapper.Map<IEnumerable<StudentDto>>(students);
+
+            PagedList<StudentDto> pageStudent = PagedList<StudentDto>.Create(studentDto, filter.PageNumber, filter.PageSize);
             int nextPage = filter.PageNumber >= 1 && filter.PageNumber < pageStudent.TotalPages ? filter.PageNumber + 1 : 1;
             int prevPage = filter.PageNumber - 1 >= 1 && filter.PageNumber <= pageStudent.TotalPages ? filter.PageNumber - 1 : 1;
             Metadata metadata = new Metadata
@@ -127,6 +134,25 @@ namespace UniversityProject.Services.Services
             IEnumerable<DetailsStudent>  student = _unitOfWork.StudentRepository.GetAllBySubject(details);
             IEnumerable<DetailsStudentDto> studentDto = _mapper.Map<IEnumerable<DetailsStudentDto>>(student);
             return studentDto;
+        }
+
+        public Page<StudentDto> Paginate(int page, int limit, Dictionary<string, string> filters = null)
+        {
+            List<Student> studentList = _unitOfWork.StudentRepository.GetAll();
+            List<StudentDto> studentDto = _mapper.Map<List<StudentDto>>(studentList);
+
+            IQueryable<StudentDto> query = studentDto.AsQueryable();
+
+            if (filters != null && filters.TryGetValue("search", out string search) &&
+                !string.IsNullOrEmpty(search))
+            {
+                query = query.Where(x =>
+                    (x.FirstName).Contains(search));
+            }
+            
+            return query.OrderByDescending(x => x.Id)
+                .AsNoTracking()
+                .Paginate(page, limit); ;
         }
 
     }

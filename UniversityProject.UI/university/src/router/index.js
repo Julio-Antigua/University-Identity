@@ -1,8 +1,8 @@
+import auth from '@/middleware/auth'
+import guest from '@/middleware/guest'
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import LoginView from '../views/View/LoginView.vue'
-
-
 
 
 Vue.use(VueRouter)
@@ -20,16 +20,24 @@ const routes = [
   {
     path: '/login',
     name: 'home',
+    meta: {
+      middleware: guest
+    },
     component: LoginView
   },
+  
   {
     path: '/signin',
     name: 'signin',
     component: () => import('../views/View/SigninView.vue')
   },
+
   {
     path: '/dashboard',
     name:'dashboard',
+    meta: {
+      middleware: auth
+    },
     component: () => import('../views/View/DashboardView.vue')
   },
 
@@ -38,6 +46,7 @@ const routes = [
     name: 'studentAdd',
     component: () => import('../views/Add/StudentAddView.vue')
   },
+
   {
     path: '/dashboard/view/student',
     name: 'studentView',
@@ -49,12 +58,12 @@ const routes = [
     name: 'subjectAdd',
     component: () => import('../views/Add/SubjectAddView.vue')
   },
+
   {
     path: '/dashboard/view/subject',
     name: 'subjectview',
     component: () => import('../views/View/SubjectView.vue')
   },
-
 
   {
     path: '/dashboard/add/course',

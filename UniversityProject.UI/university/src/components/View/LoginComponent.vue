@@ -41,6 +41,7 @@ export default {
       message: ""
     }
   },
+  middleware:'guest',
   methods: {
     login(){
         let json = {

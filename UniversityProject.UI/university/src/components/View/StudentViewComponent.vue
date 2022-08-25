@@ -139,6 +139,7 @@ export default{
            previousPageUrl: ''
         }   
     },
+    middleware:'auth',
     mounted:function(){
        this.$http.get("https://localhost:44307/api/Student?").then(data => {
         console.log(data);

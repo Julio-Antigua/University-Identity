@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityProject.Api", "UniversityProject.Api\UniversityProject.Api.csproj", "{F9366C4B-1878-4CCA-9476-9286C05FE349}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityProject.Api", "UniversityProject.Api\UniversityProject.Api.csproj", "{F9366C4B-1878-4CCA-9476-9286C05FE349}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityProject.Domain", "UniversityProject.Domain\UniversityProject.Domain.csproj", "{142F8E37-B3EA-4C45-AC7C-B3F7A806AD06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityProject.Domain", "UniversityProject.Domain\UniversityProject.Domain.csproj", "{142F8E37-B3EA-4C45-AC7C-B3F7A806AD06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityProject.Infrastructure", "UniversityProject.Infrastructure\UniversityProject.Infrastructure.csproj", "{7DCD56D3-EFB2-495C-ABFC-DA7F87138D16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityProject.Infrastructure", "UniversityProject.Infrastructure\UniversityProject.Infrastructure.csproj", "{7DCD56D3-EFB2-495C-ABFC-DA7F87138D16}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityProject.Services", "UniversityProject.Services\UniversityProject.Services.csproj", "{5CA35E43-F36B-4243-839D-CB9535DBB389}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityProject.Services", "UniversityProject.Services\UniversityProject.Services.csproj", "{5CA35E43-F36B-4243-839D-CB9535DBB389}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{2608AE79-EF11-4D7A-B174-608F258BE6AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityProject.UnitTests", "UniversityProject.UnitTests\UniversityProject.UnitTests.csproj", "{0C67A73C-CDEF-4610-8349-024736ED74AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,9 +37,16 @@ Global
 		{5CA35E43-F36B-4243-839D-CB9535DBB389}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CA35E43-F36B-4243-839D-CB9535DBB389}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CA35E43-F36B-4243-839D-CB9535DBB389}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C67A73C-CDEF-4610-8349-024736ED74AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C67A73C-CDEF-4610-8349-024736ED74AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C67A73C-CDEF-4610-8349-024736ED74AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C67A73C-CDEF-4610-8349-024736ED74AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0C67A73C-CDEF-4610-8349-024736ED74AA} = {2608AE79-EF11-4D7A-B174-608F258BE6AF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A0E0644F-8D0C-46D9-8142-81795EA229A9}

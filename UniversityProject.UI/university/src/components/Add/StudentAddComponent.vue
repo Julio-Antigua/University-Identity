@@ -123,7 +123,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 h4{
     margin-right: 40px;
     font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -175,7 +175,9 @@ h4{
   padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  margin-top: 5%;
   text-align: center;
+  margin-bottom: 10%;
 }
 .text-left{
     margin-right: 300px;

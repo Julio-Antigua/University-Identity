@@ -34,7 +34,7 @@
           </li>
         </ul>
         <form class="d-flex">
-          <button class="btn btn-danger bi bi-person-circle mx-2">{{user}}</button>         
+          <button class="btn btn-danger bi bi-person-circle mx-2"> {{user}}</button>         
           <button class="btn btn-outline-dark" type="submit" v-on:click="Logout()">Logout</button>
         </form>
       </div>
@@ -117,7 +117,7 @@ export default{
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -127,7 +127,7 @@ export default{
 }
 
 nav {
-  padding: 30px;
+  padding: 10px;
 }
 
 nav a {
@@ -135,9 +135,9 @@ nav a {
   color: #2c3e50;
 }
 
-nav a.router-link-exact-active {
+/* nav a.router-link-exact-active {
   color: #f00404c9;
-}
+} */
 
   
     a{
