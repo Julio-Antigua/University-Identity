@@ -18,9 +18,9 @@ namespace UniversityProject.Infrastructure.Repositories
             this._entities = context.Set<T>();
         }
 
-        public IEnumerable<T> GetAll()
+        public List<T> GetAll()
         {
-            return  _entities.AsEnumerable();
+            return  _entities.ToList();
         }
         public async Task<T> GetById(int id)
         {

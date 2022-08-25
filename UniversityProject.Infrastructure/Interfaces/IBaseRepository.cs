@@ -5,7 +5,7 @@ namespace UniversityProject.Infrastructure.Interfaces
 {
     public interface IBaseRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        List<T> GetAll();
         Task<T> GetById(int id);
         Task Add(T entity);
         void UpdateById(T entity);
